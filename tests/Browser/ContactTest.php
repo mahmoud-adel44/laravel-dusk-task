@@ -20,10 +20,10 @@ class ContactTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->visit('https://proxyhulk.com/')
                 ->clickLink('Contact now')
-                ->type('contact_name' , 'mahmoud Adel Ahmed')
-                ->type('contact_email' , 'mahmoud.adel18@yahoo.com')
-                ->type('contact_subject' , 'mahmoud Adel Ahmed - Back-end')
-                ->type('contact_message' , 'https://github.com/mahmoud-adel44/laravel-dusk-task.git')
+                ->type('contact_name', 'mahmoud Adel Ahmed')
+                ->type('contact_email', 'mhmoud.adel18@yahoo.com')
+                ->type('contact_subject', 'mahmoud Adel Ahmed - Back-end')
+                ->type('contact_message', 'https://github.com/mahmoud-adel44/laravel-dusk-task.git')
                 ->press('Send')
                 ->waitForReload()
                 ->scrollTo('div[class="contact-us"]')
@@ -39,10 +39,10 @@ class ContactTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->visit('https://proxyhulk.com/')
                 ->clickLink('Contact now')
-                ->type('contact_name' , '')
-                ->type('contact_email' , '')
-                ->type('contact_subject' , '')
-                ->type('contact_message' , '')
+                ->type('contact_name', '')
+                ->type('contact_email', '')
+                ->type('contact_subject', '')
+                ->type('contact_message', '')
                 ->press('Send')
                 ->waitForReload()
                 ->scrollTo('div[class="contact-us"]')
@@ -59,10 +59,10 @@ class ContactTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->visit('https://proxyhulk.com/')
                 ->clickLink('Contact now')
-                ->type('contact_name' , 'test')
-                ->type('contact_email' , 'test')
-                ->type('contact_subject' , 'test')
-                ->type('contact_message' , 'test')
+                ->type('contact_name', 'test')
+                ->type('contact_email', 'test')
+                ->type('contact_subject', 'test')
+                ->type('contact_message', 'test')
                 ->press('Send')
                 ->waitForReload()
                 ->scrollTo('div[class="contact-us"]')
@@ -75,10 +75,10 @@ class ContactTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->visit('https://proxyhulk.com/')
                 ->clickLink('Contact now')
-                ->type('contact_name' , 'test')
-                ->type('contact_email' , 123456)
-                ->type('contact_subject' , 'test')
-                ->type('contact_message' , 'test')
+                ->type('contact_name', 'test')
+                ->type('contact_email', 123456)
+                ->type('contact_subject', 'test')
+                ->type('contact_message', 'test')
                 ->press('Send')
                 ->waitForReload()
                 ->scrollTo('div[class="contact-us"]')
@@ -91,10 +91,10 @@ class ContactTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->visit('https://proxyhulk.com/')
                 ->clickLink('Contact now')
-                ->type('contact_name' , 'test')
-                ->type('contact_email' , '')
-                ->type('contact_subject' , 'test')
-                ->type('contact_message' , 'test')
+                ->type('contact_name', 'test')
+                ->type('contact_email', '')
+                ->type('contact_subject', 'test')
+                ->type('contact_message', 'test')
                 ->press('Send')
                 ->waitForReload()
                 ->scrollTo('div[class="contact-us"]')
@@ -109,10 +109,10 @@ class ContactTest extends DuskTestCase
 
             $browser->visit('https://proxyhulk.com/')
                 ->clickLink('Contact now')
-                ->type('contact_name' , '')
-                ->type('contact_email' , 'test@test.com')
-                ->type('contact_subject' , 'test')
-                ->type('contact_message' , 'test')
+                ->type('contact_name', '')
+                ->type('contact_email', 'test@test.com')
+                ->type('contact_subject', 'test')
+                ->type('contact_message', 'test')
                 ->press('Send')
                 ->waitForReload()
                 ->scrollTo('div[class="contact-us"]')
@@ -128,15 +128,49 @@ class ContactTest extends DuskTestCase
 
             $browser->visit('https://proxyhulk.com/')
                 ->clickLink('Contact now')
-                ->type('contact_name' , 'test')
-                ->type('contact_email' , 'test@test.com')
-                ->type('contact_subject' , '')
-                ->type('contact_message' , '')
+                ->type('contact_name', 'test')
+                ->type('contact_email', 'test@test.com')
+                ->type('contact_subject', '')
+                ->type('contact_message', '')
                 ->press('Send')
                 ->waitForReload()
                 ->scrollTo('div[class="contact-us"]')
                 ->assertSee('The contact subject field is required.')
                 ->assertSee('The contact message field is required.');
+        });
+    }
+
+    public function testAllFieldsAreRequiredByLetMessageEmpty(): void
+    {
+        $this->browse(function (Browser $browser) {
+
+            $browser->visit('https://proxyhulk.com/')
+                ->clickLink('Contact now')
+                ->type('contact_name', 'test')
+                ->type('contact_email', 'test@test.com')
+                ->type('contact_subject', 'test subject')
+                ->type('contact_message', '')
+                ->press('Send')
+                ->waitForReload()
+                ->scrollTo('div[class="contact-us"]')
+                ->assertSee('The contact message field is required.');
+        });
+    }
+
+    public function testAllFieldsAreRequiredByLetSubjectEmpty(): void
+    {
+        $this->browse(function (Browser $browser) {
+
+            $browser->visit('https://proxyhulk.com/')
+                ->clickLink('Contact now')
+                ->type('contact_name', 'test')
+                ->type('contact_email', 'test@test.com')
+                ->type('contact_subject', '')
+                ->type('contact_message', 'test message')
+                ->press('Send')
+                ->waitForReload()
+                ->scrollTo('div[class="contact-us"]')
+                ->assertSee('The contact subject field is required.');
         });
     }
 }

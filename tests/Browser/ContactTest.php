@@ -52,4 +52,91 @@ class ContactTest extends DuskTestCase
                 ->assertSee('The contact message field is required.');
         });
     }
+
+
+    public function testEmailFieldMustBeTypeEmailByEnterText(): void
+    {
+        $this->browse(function (Browser $browser) {
+            $browser->visit('https://proxyhulk.com/')
+                ->clickLink('Contact now')
+                ->type('contact_name' , 'test')
+                ->type('contact_email' , 'test')
+                ->type('contact_subject' , 'test')
+                ->type('contact_message' , 'test')
+                ->press('Send')
+                ->waitForReload()
+                ->scrollTo('div[class="contact-us"]')
+                ->assertSee('The contact email must be a valid email address.');
+        });
+    }
+
+    public function testEmailFieldMustBeTypeEmailByEnterNumber(): void
+    {
+        $this->browse(function (Browser $browser) {
+            $browser->visit('https://proxyhulk.com/')
+                ->clickLink('Contact now')
+                ->type('contact_name' , 'test')
+                ->type('contact_email' , 123456)
+                ->type('contact_subject' , 'test')
+                ->type('contact_message' , 'test')
+                ->press('Send')
+                ->waitForReload()
+                ->scrollTo('div[class="contact-us"]')
+                ->assertSee('The contact email must be a valid email address.');
+        });
+    }
+
+    public function testAllFieldsAreRequiredByLetEmailEmpty(): void
+    {
+        $this->browse(function (Browser $browser) {
+            $browser->visit('https://proxyhulk.com/')
+                ->clickLink('Contact now')
+                ->type('contact_name' , 'test')
+                ->type('contact_email' , '')
+                ->type('contact_subject' , 'test')
+                ->type('contact_message' , 'test')
+                ->press('Send')
+                ->waitForReload()
+                ->scrollTo('div[class="contact-us"]')
+                ->assertSee('The contact email field is required.');
+
+        });
+    }
+
+    public function testAllFieldsAreRequiredByLetContactNameEmpty(): void
+    {
+        $this->browse(function (Browser $browser) {
+
+            $browser->visit('https://proxyhulk.com/')
+                ->clickLink('Contact now')
+                ->type('contact_name' , '')
+                ->type('contact_email' , 'test@test.com')
+                ->type('contact_subject' , 'test')
+                ->type('contact_message' , 'test')
+                ->press('Send')
+                ->waitForReload()
+                ->scrollTo('div[class="contact-us"]')
+                ->assertSee('The contact name field is required.');
+
+        });
+    }
+
+
+    public function testAllFieldsAreRequiredByLetSubjectAndMessageEmpty(): void
+    {
+        $this->browse(function (Browser $browser) {
+
+            $browser->visit('https://proxyhulk.com/')
+                ->clickLink('Contact now')
+                ->type('contact_name' , 'test')
+                ->type('contact_email' , 'test@test.com')
+                ->type('contact_subject' , '')
+                ->type('contact_message' , '')
+                ->press('Send')
+                ->waitForReload()
+                ->scrollTo('div[class="contact-us"]')
+                ->assertSee('The contact subject field is required.')
+                ->assertSee('The contact message field is required.');
+        });
+    }
 }
